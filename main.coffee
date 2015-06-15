@@ -321,6 +321,26 @@ class LinkToOwnMRButton
 
     $('.nav-sidebar').append($link_to_mr)
 
+# add milestone button
+class LinkToMilestoneButton
+  constructor: ->
+    @init()
+
+  init: ->
+    @on()
+
+  on: ->
+    # FIXME: check on repository page?
+    return if $('.shortcuts-tree').length is 0
+
+    $link_to_milestone = $('<a/>').attr
+      href: $('.shortcuts-merge_requests').parent().find('a').attr('href').replace('merge_requests', 'milestones')
+
+    $link_to_milestone.append($('<i/>').addClass('fa fa-clock-o'))
+    $link_to_milestone_btn = $('<li/>').append($link_to_milestone)
+
+    $('.separate-item').before($link_to_milestone_btn)
+
 # always open diff stas
 class AlwaysOpenDiffStats
   selectors:
@@ -390,6 +410,7 @@ activateExtensions = ->
   new PreventDiscussBodyToHide
   new CloseSideBar
   new LinkToOwnMRButton
+  new LinkToMilestoneButton
   new AlwaysOpenDiffStats
   new AddMileStoneSelectionToEasilyVisiblePlaceOnMR
 
